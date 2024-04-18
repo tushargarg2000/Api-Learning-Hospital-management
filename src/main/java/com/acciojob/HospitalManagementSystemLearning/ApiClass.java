@@ -1,5 +1,7 @@
 package com.acciojob.HospitalManagementSystemLearning;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,22 +36,24 @@ public class ApiClass {
     }
 
     @PostMapping("addPatient")
-    public String addPatient(@RequestBody Patient patient) {
+    public ResponseEntity addPatient(@RequestBody Patient patient) {
 
         int key = patient.getPatientId();
         //Add this to the patient DB
         patientDb.put(key,patient);
 
-        return "The patient with patientId"+key+" has been saved to DB";
+        String result = "The patient with patientId"+key+" has been saved to DB";
 
+        return new ResponseEntity(result, HttpStatus.CREATED);
     }
 
     @GetMapping("getPatientInfo")
-    public Patient getPatientInfo(@RequestParam("patientIdEnterInformation")Integer patientId){
+    public ResponseEntity getPatientInfo(@RequestParam("patientIdEnterInformation")Integer patientId){
 
         //patientId is acting as the key
         Patient patient = patientDb.get(patientId);
-        return patient;
+
+        return new ResponseEntity(patient,HttpStatus.EXPECTATION_FAILED);
     }
 
     @GetMapping("/getPatientByNameAndMobNo")
