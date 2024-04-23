@@ -1,5 +1,6 @@
 package com.acciojob.HospitalManagementSystemLearning;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,7 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ControllerLayer {
 
-    ServiceLayer serviceLayerObj = new ServiceLayer();
+    @Autowired
+    ServiceLayer serviceLayerObj;
 
     @PostMapping("addPatient")
     public String addPatient(@RequestBody Patient patient) {
